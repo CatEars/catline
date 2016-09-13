@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-
+import os
 
 def print_help():
     print('Usage: catline file [ a:b | a b ]')
@@ -13,6 +13,9 @@ def print_line(linenum, fname, content):
 
 
 def catline(fname, start, end):
+    if not os.path.isfile(fname):
+        print('Error: {} is not recognized as a file'.format(fname))
+        return
     with open(fname, 'r') as f:
         for idx, line in enumerate(f):
             if end != -1 and end <= idx:
