@@ -49,6 +49,13 @@ class PygmentWrapper:
         self.formatter = formatters.get_formatter_by_name('terminal')
         self.lines = "".join(iter_lines(self.fname, 0, -1))
         self.lines = highlight(self.lines, self.lexer, self.formatter).split('\n')
+
+        # Make sure that self._end and self._start are valid
+        if self._end == -1:
+            self._end = len(self.lines)
+        else:
+            self._end = min(self._end, len(self.lines))
+        self._start = min(self._start, len(self.lines))
         
     def format_line(self, linenum):
         if 0 <= linenum < len(self.lines):
