@@ -1,4 +1,4 @@
-from pygments import lexers, formatters, highlight
+from pygments import lexers, formatters, highlight, styles
 
 def iter_lines(fname, start, end):
     with open(fname, 'r') as f:
@@ -42,7 +42,7 @@ class PygmentWrapper:
         self.fname = fname
 
     def get_lexer(self):
-        return lexers.get_lexer_by_filename(self.fname)
+        return lexers.get_lexer_for_filename(self.fname)
         
     def init_writer(self):
         self.lexer = self.get_lexer()
@@ -82,13 +82,13 @@ def match_py(fname):
 def match_cpp(fname):
     m = fname.endswith
     if m('.cpp') or m('hpp') or m('.cc') or m('hh') or \
-       m('.cxx') or m('.hxx') or m('.c++') or m('.h++'):
+       m('.cxx') or m('.hxx') or m('.c++') or m('.h++') or \
+       m('.c') or m('.h'): # Also add c
         return lexers.get_lexer_by_name('c++')
     return None
 
 def match_java(fname):
     return lexers.get_lexer_by_name('java') if fname.endswith('.java') else None
-
 
 class FastPygmentWrapper(PygmentWrapper):
     """Doesn't do any fancy matching, just uses the most common of languages

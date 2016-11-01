@@ -45,7 +45,7 @@ def catline_args(fname, start=0, end=-1):
 
     
 def main():
-    if len(sys.argv) == 4 or len(sys.argv) == 3 or len(sys.argv) == 2:
+    if len(sys.argv) in (4, 3, 2):
         catline_args(*sys.argv[1:])
     else:
         print_help()
